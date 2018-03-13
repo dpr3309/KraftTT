@@ -9,13 +9,15 @@ namespace TimerScripts
 	
 		void Start ()
 		{
-			timeLeft = 90;
+			timeLeft = 10;
 		}
 
 		protected override void TimeIsOver()
 		{
 			//todo: инициировать конец игры
 			this.gameObject.SetActive(false);
+			
+			ScoreManager.Instance.FinalizeGame();
 			FindObjectOfType<UIController>().EndGameTimer();
 		}
 

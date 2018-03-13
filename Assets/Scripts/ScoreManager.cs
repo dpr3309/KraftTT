@@ -30,10 +30,11 @@ public class ScoreManager : MonoBehaviour
 
 	private void LoadBestScore()
 	{
-		//todo: загрузить лучший счет
+		bestScore = DataManager.Instance.GetBestScore();
 		UpdateBestScoreLable();
 	}
 
+	
 	public void AddPoint(int point)
 	{
 		currentScore += point;
@@ -54,5 +55,24 @@ public class ScoreManager : MonoBehaviour
 	private void UpdateBestScoreLable()
 	{
 		bestScoreLable.text = bestScore.ToString();
+	}
+
+	public void FinalizeGame()
+	{
+		var oldBestScore = DataManager.Instance.GetBestScore();
+		if (oldBestScore < currentScore)
+		{
+			DataManager.Instance.SetBestScore(currentScore);
+		}
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.A))
+		{
+			Debug.Log("Reset score");
+			DataManager.Instance.SetBestScore(0);
+			UpdateBestScoreLable();
+		}
 	}
 }

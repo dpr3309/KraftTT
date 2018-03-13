@@ -1,30 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class SquareController : MonoBehaviour
 {
+	public static UnityAction<int> ReachedCheckpoint = delegate {  };
 
-	[SerializeField] private Text lable;
-	private Vector3 startPosition;
+	private SpriteRenderer spriteRenderer;
 	
-	// Use this for initialization
+	private Vector3 startPosition;
+
+	private int reward = 1;
+	[SerializeField]private Color color;
+
+	private void Awake()
+	{
+		spriteRenderer = this.GetComponent<SpriteRenderer>();
+	}
+
+
 	void Start ()
 	{
 		startPosition = this.transform.position;
-
+		spriteRenderer.color = color;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	private void OnMouseDown()
 	{
-		Debug.Log("Test");
-		lable.text = "Test";
 	}
 
 
@@ -34,23 +36,40 @@ public class SquareController : MonoBehaviour
 		mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		
 		this.transform.position = new Vector3(mousePosition.x, mousePosition.y);
-
-//		if (spring.enabled = true) 
-//		{
-// 
-//			Vector2 cursorPosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);//getting cursor position
-//                 
-//			spring.connectedAnchor = cursorPosition;//the anchor get's cursor's position
-//                  
-// 
-//		}
 	}
- 
      
 	void OnMouseUp()        
 	{
-     
-		//spring.enabled = false;//disabling the spring component
 		this.transform.position = startPosition;
+	}
+
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.CompareTag("CheckPoint"))
+		{
+			CheckComplianceCheckPoint(other);
+		}
+	}
+
+	private void CheckComplianceCheckPoint(Collider2D other)
+	{
+		var checkPoint = other.gameObject.GetComponent<CheckPoint>();
+
+		if (this.color == checkPoint.CurrentColor)
+		{
+			ReachedCheckpoint(reward);
+			this.gameObject.SetActive(false);
+		}
+	}
+
+	private void OnDisable()
+	{
+		//todo: освободить квадрат
+		
+	}
+
+	private void OnDestroy()
+	{
+		ReachedCheckpoint = delegate {  };
 	}
 }

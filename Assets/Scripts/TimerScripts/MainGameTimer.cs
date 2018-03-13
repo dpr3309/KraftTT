@@ -16,6 +16,7 @@ namespace TimerScripts
 		{
 			//todo: инициировать конец игры
 			this.gameObject.SetActive(false);
+			FindObjectOfType<UIController>().EndGameTimer();
 		}
 
 		private string timeString;

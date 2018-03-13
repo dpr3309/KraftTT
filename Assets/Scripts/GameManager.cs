@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -14,8 +15,13 @@ public class GameManager : MonoBehaviour {
 		ScoreManager.Instance.AddPoint(point);
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
+	public void Restart()
+	{
+		SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+	}
+
+	public void Exit()
+	{
+		Application.Quit();
 	}
 }

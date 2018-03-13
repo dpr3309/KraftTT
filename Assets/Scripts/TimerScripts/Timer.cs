@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 
-public abstract class Timer : MonoBehaviour
+namespace TimerScripts
 {
-	protected float timeLeft;
-	
-	void Update ()
+	public abstract class Timer : MonoBehaviour
 	{
-		timeLeft -= Time.deltaTime;
-		if (timeLeft < 0)
+		protected float timeLeft;
+	
+		void Update ()
 		{
-			TimeIsOver();
-			return;
+			timeLeft -= Time.deltaTime;
+			if (timeLeft < 0)
+			{
+				TimeIsOver();
+				return;
+			}
+			SetTimeValue();
 		}
-		SetTimeValue();
+
+		protected abstract void TimeIsOver();
+
+		protected abstract void SetTimeValue();
 	}
-
-	protected abstract void TimeIsOver();
-
-	protected abstract void SetTimeValue();
 }

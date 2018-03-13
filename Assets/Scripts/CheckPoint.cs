@@ -21,4 +21,10 @@ public class CheckPoint : MonoBehaviour
 	{
 		spriteRenderer.color = color;
 	}
+
+	public void ChangeColor()
+	{
+		color = Random.ColorHSV();
+		spriteRenderer.color = color;
+	}
 }

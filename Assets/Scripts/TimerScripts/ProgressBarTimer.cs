@@ -3,27 +3,29 @@ using UnityEngine.UI;
 
 namespace TimerScripts
 {
-	[RequireComponent(typeof(Image))]
 	public class ProgressBarTimer : Timer
 	{
-		private Image timeBarImage;
+		[SerializeField] private Image timeBarImage;
 		private int startTimeValue;
 
-		private void Awake()
-		{
-			timeBarImage = this.GetComponent<Image>();
-		}
 
 		void Start ()
 		{
-			startTimeValue = 10;
+			startTimeValue = Random.Range(3, 10);
 			timeLeft = startTimeValue;
 		}
 
 		protected override void TimeIsOver()
 		{
-			//todo: инициировать замену чекпоинта
-			
+			//todo: инициировать цвета замену чекпоинта
+			this.GetComponent<CheckPoint>().ChangeColor();
+			ResetTimer();
+
+		}
+
+		private void ResetTimer()
+		{
+			timeLeft = startTimeValue;
 		}
 
 		protected override void SetTimeValue()

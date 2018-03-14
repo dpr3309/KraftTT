@@ -38,10 +38,12 @@ public class DataManager : MonoBehaviour
 		return bestScore;
 	}
 
-	[SerializeField]private List<Color> UnusedCheckpointColors = new List<Color>();
-	private List<Color> UnusedSquareColors = new List<Color>();
+	[SerializeField]private List<Color> UnusedCheckpointColors;
+	[SerializeField]private List<Color> UnusedSquareColors;
 	public void LoadData()
 	{
+		UnusedCheckpointColors = new List<Color>();
+		UnusedSquareColors = new List<Color>();
 		config = BinarySerializationManager.RuntimeLoadFile();
 
 		InitListsOfColors();

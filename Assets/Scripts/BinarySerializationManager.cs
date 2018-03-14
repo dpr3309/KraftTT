@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
 using UnityEngine;
 
 public static class BinarySerializationManager{
@@ -19,7 +18,7 @@ public static class BinarySerializationManager{
 
 	public static AppConfig RuntimeLoadFile()
 	{
-		AssetDatabase.Refresh();
+
 		TextAsset configFile = Resources.Load<TextAsset>("KraftTTAppConfig");
 		MemoryStream stream = new MemoryStream(configFile.bytes);
 

@@ -6,10 +6,10 @@ public class GameManager : MonoBehaviour {
 
 	public static UnityAction InitGameTimer = delegate {  };
 	public static UnityAction InitCheckPoints = delegate {  };
-	public static UnityAction InitSquares = delegate {  };
+
+	[SerializeField] private Vector3[] startPositions;
 	
 	void Start () {
-		SquareController.ReachedCheckpoint += ReachedCheckpoint;
 
 		Startup();
 	}
@@ -20,12 +20,12 @@ public class GameManager : MonoBehaviour {
 
 		InitGameTimer();
 		InitCheckPoints();
-		InitSquares();
-	}
 
-	private void ReachedCheckpoint(int point)
-	{
-		ScoreManager.Instance.AddPoint(point);
+		foreach (var startPosition in startPositions)
+		{
+			SquareFactory.Instance.CreateSquare(startPosition);
+		}
+
 	}
 
 	public void Restart()
@@ -42,6 +42,6 @@ public class GameManager : MonoBehaviour {
 	{
 		InitGameTimer = delegate {  };
 		InitCheckPoints = delegate {  };
-		InitSquares = delegate {  };
+
 	}
 }

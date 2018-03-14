@@ -5,19 +5,16 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SpriteRenderer))]
 public class SquareController : MonoBehaviour
 {
-	public static UnityAction<int> ReachedCheckpoint = delegate {  };
-
 	private SpriteRenderer spriteRenderer;
 	
 	private Vector3 startPosition;
 
 	private int reward = 1;
-	[SerializeField]private Color color;
+	private Color color;
 
 	private void Awake()
 	{
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
-		GameManager.InitSquares += SetColor;
 	}
 
 	private void SetColor()
@@ -30,7 +27,7 @@ public class SquareController : MonoBehaviour
 	void Start ()
 	{
 		startPosition = this.transform.position;
-		
+		SetColor();
 	}
 	
 	private void OnMouseDown()
@@ -46,7 +43,12 @@ public class SquareController : MonoBehaviour
 		this.transform.position = new Vector3(mousePosition.x, mousePosition.y);
 	}
      
-	void OnMouseUp()        
+	void OnMouseUp()
+	{
+		ResetPosition();
+	}
+
+	private void ResetPosition()
 	{
 		this.transform.position = startPosition;
 	}
@@ -65,19 +67,12 @@ public class SquareController : MonoBehaviour
 
 		if (this.color == checkPoint.CurrentColor)
 		{
-			ReachedCheckpoint(reward);
-			this.gameObject.SetActive(false);
+			ScoreManager.Instance.AddPoint(reward);
+
+			DataManager.Instance.AddReleasedSquareColor(color);
+			SquareFactory.Instance.CreateSquare(startPosition);
+			Destroy(this.gameObject);
+
 		}
-	}
-
-	private void OnDisable()
-	{
-		//todo: освободить квадрат
-		
-	}
-
-	private void OnDestroy()
-	{
-		ReachedCheckpoint = delegate {  };
 	}
 }

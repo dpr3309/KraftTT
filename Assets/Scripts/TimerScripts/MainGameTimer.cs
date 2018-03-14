@@ -10,6 +10,7 @@ namespace TimerScripts
 
 		private void Awake()
 		{
+			Time.timeScale = 1;
 			GameManager.InitGameTimer += InitGameTimer;
 		}
 
@@ -21,6 +22,7 @@ namespace TimerScripts
 		protected override void TimeIsOver()
 		{
 			//todo: инициировать конец игры
+			Time.timeScale = 0;
 			this.gameObject.SetActive(false);
 			
 			ScoreManager.Instance.FinalizeGame();

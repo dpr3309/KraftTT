@@ -5,7 +5,7 @@ public class CheckPoint : MonoBehaviour
 {
 	private SpriteRenderer spriteRenderer;
 
-	[SerializeField] private Color color;
+	private Color color;
 	public Color CurrentColor
 	{
 		get { return color; }
@@ -14,17 +14,20 @@ public class CheckPoint : MonoBehaviour
 	void Awake()
 	{
 		spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+		GameManager.InitCheckPoints += SetColor;
 		
 	}
 
-	private void Start()
+	private void SetColor()
 	{
+		color = DataManager.Instance.GetCheckpointColor();
 		spriteRenderer.color = color;
 	}
 
+
 	public void ChangeColor()
 	{
-		color = Random.ColorHSV();
-		spriteRenderer.color = color;
+		DataManager.Instance.AddReleasedCheckpointColor(color);
+		SetColor();
 	}
 }

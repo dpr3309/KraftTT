@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -16,13 +17,20 @@ public class SquareController : MonoBehaviour
 	private void Awake()
 	{
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
+		GameManager.InitSquares += SetColor;
+	}
+
+	private void SetColor()
+	{
+		color = DataManager.Instance.GetSquareColor();
+		spriteRenderer.color = color;
 	}
 
 
 	void Start ()
 	{
 		startPosition = this.transform.position;
-		spriteRenderer.color = color;
+		
 	}
 	
 	private void OnMouseDown()

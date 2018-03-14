@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace TimerScripts
@@ -6,10 +7,15 @@ namespace TimerScripts
 	public class MainGameTimer : Timer
 	{
 		[SerializeField] private Text timerText;
-	
-		void Start ()
+
+		private void Awake()
 		{
-			timeLeft = 10;
+			GameManager.InitGameTimer += InitGameTimer;
+		}
+
+		private void InitGameTimer()
+		{
+			timeLeft = DataManager.Instance.GetGameTimer();
 		}
 
 		protected override void TimeIsOver()

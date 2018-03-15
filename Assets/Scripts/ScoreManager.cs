@@ -4,7 +4,10 @@ using UnityEngine.UI;
 public class ScoreManager : MonoBehaviour
 {
 	[SerializeField] private Text currentScoreLable, bestScoreLable;
-	private int currentScore, bestScore;
+	private int  bestScore;
+
+	//private int currentScore;
+	public int CurrentScore{get;private set;}
 
 	private static ScoreManager instance;
 	public static ScoreManager Instance
@@ -37,10 +40,10 @@ public class ScoreManager : MonoBehaviour
 	
 	public void AddPoint(int point)
 	{
-		currentScore += point;
-		if (currentScore > bestScore)
+		CurrentScore += point;
+		if (CurrentScore > bestScore)
 		{
-			bestScore = currentScore;
+			bestScore = CurrentScore;
 			UpdateBestScoreLable();
 		}
 
@@ -49,7 +52,7 @@ public class ScoreManager : MonoBehaviour
 
 	private void UpdateCurrentScoreLable()
 	{
-		currentScoreLable.text = currentScore.ToString();
+		currentScoreLable.text = CurrentScore.ToString();
 	}
 
 	private void UpdateBestScoreLable()
@@ -60,9 +63,9 @@ public class ScoreManager : MonoBehaviour
 	public void FinalizeGame()
 	{
 		var oldBestScore = DataManager.Instance.GetBestScore();
-		if (oldBestScore < currentScore)
+		if (oldBestScore < CurrentScore)
 		{
-			DataManager.Instance.SetBestScore(currentScore);
+			DataManager.Instance.SetBestScore(CurrentScore);
 		}
 	}
 

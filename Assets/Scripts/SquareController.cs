@@ -6,11 +6,12 @@ using UnityEngine.Events;
 public class SquareController : MonoBehaviour
 {
 	private SpriteRenderer spriteRenderer;
-	
 	private Vector3 startPosition;
-
-	private int reward = 1;
 	private Color color;
+	
+	private int reward = 1;
+	private static float downTime;
+	private const float delayBetweenClicks = 0.3f;
 
 	private void Awake()
 	{
@@ -23,7 +24,6 @@ public class SquareController : MonoBehaviour
 		spriteRenderer.color = color;
 	}
 
-
 	void Start ()
 	{
 		startPosition = this.transform.position;
@@ -32,6 +32,14 @@ public class SquareController : MonoBehaviour
 	
 	private void OnMouseDown()
 	{
+		if (Time.time - downTime < delayBetweenClicks)
+		{
+			if (!DataManager.Instance.ColorHasPairOnTheField(color))
+			{
+				FinalizeAndDestroy();
+			}
+		}
+		downTime = Time.time;
 	}
 
 
@@ -68,11 +76,15 @@ public class SquareController : MonoBehaviour
 		if (this.color == checkPoint.CurrentColor)
 		{
 			ScoreManager.Instance.AddPoint(reward);
-
-			DataManager.Instance.AddReleasedSquareColor(color);
-			SquareFactory.Instance.CreateSquare(startPosition);
-			Destroy(this.gameObject);
-
+			
+			FinalizeAndDestroy();
 		}
+	}
+
+	private void FinalizeAndDestroy()
+	{
+		DataManager.Instance.AddReleasedSquareColor(color);
+		SquareFactory.Instance.CreateSquare(startPosition);
+		Destroy(this.gameObject);
 	}
 }

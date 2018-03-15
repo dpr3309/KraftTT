@@ -92,6 +92,9 @@ public class DataManager : MonoBehaviour
 		return config.Timer;
 	}
 
-	
-	
+
+	public bool ColorHasPairOnTheField(Color color)
+	{
+		return !UnusedCheckpointColors.Contains(color);
+	}
 }

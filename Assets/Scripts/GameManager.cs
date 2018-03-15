@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour {
 	public static UnityAction InitGameTimer = delegate {  };
 	public static UnityAction InitCheckPoints = delegate {  };
 
-	[SerializeField] private Vector3[] startPositions;
 	
 	void Start () {
 
@@ -21,9 +20,9 @@ public class GameManager : MonoBehaviour {
 		InitGameTimer();
 		InitCheckPoints();
 
-		foreach (var startPosition in startPositions)
+		for (Positions position = Positions.Top; position <= Positions.Bottom; position++)
 		{
-			SquareFactory.Instance.CreateSquare(startPosition);
+			SquareFactory.Instance.CreateSquare(position);
 		}
 
 	}

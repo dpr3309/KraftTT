@@ -6,8 +6,7 @@ public class ScoreManager : MonoBehaviour
 	[SerializeField] private Text currentScoreLable, bestScoreLable;
 	private int  bestScore;
 
-	//private int currentScore;
-	public int CurrentScore{get;private set;}
+	public int CurrentScore { get; private set;}
 
 	private static ScoreManager instance;
 	public static ScoreManager Instance
@@ -22,7 +21,6 @@ public class ScoreManager : MonoBehaviour
 			DestroyImmediate(this);
 			return;
 		}
-
 		instance = this;
 	}
 
@@ -37,7 +35,6 @@ public class ScoreManager : MonoBehaviour
 		UpdateBestScoreLable();
 	}
 
-	
 	public void AddPoint(int point)
 	{
 		CurrentScore += point;
@@ -68,14 +65,16 @@ public class ScoreManager : MonoBehaviour
 			DataManager.Instance.SetBestScore(CurrentScore);
 		}
 	}
-
+	
+#if UNITY_EDITOR
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.A))
+		if (Input.GetKeyDown(KeyCode.R))
 		{
 			Debug.Log("Reset score");
 			DataManager.Instance.SetBestScore(0);
 			UpdateBestScoreLable();
 		}
 	}
+#endif
 }

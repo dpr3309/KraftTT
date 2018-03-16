@@ -13,11 +13,13 @@ public static class BinarySerializationManager{
 		_BinaryFormater.Serialize(stream, serializeObject);
 
 		stream.Close();
-
 	}
 
 	public static AppConfig RuntimeLoadFile()
 	{
+#if UNITY_EDITOR 
+		UnityEditor.AssetDatabase.ImportAsset("Assets/Resources/KraftTTAppConfig.bytes");
+#endif
 
 		TextAsset configFile = Resources.Load<TextAsset>("KraftTTAppConfig");
 		MemoryStream stream = new MemoryStream(configFile.bytes);
@@ -46,5 +48,4 @@ public static class BinarySerializationManager{
 
 		return config;
 	}
-
 }

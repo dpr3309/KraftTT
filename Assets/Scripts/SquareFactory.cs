@@ -20,7 +20,6 @@ public class SquareFactory : MonoBehaviour
 	}
 
 	[SerializeField] private GameObject squarePrefab;
-
 	public void CreateSquare(Positions position)
 	{
 		Bounds bounds = squarePrefab.GetComponent<SpriteRenderer>().bounds;

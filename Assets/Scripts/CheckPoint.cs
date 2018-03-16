@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using TimerScripts;
+using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent((typeof(CheckPointTimer)))]
 public class CheckPoint : MonoBehaviour
 {
 	private SpriteRenderer spriteRenderer;

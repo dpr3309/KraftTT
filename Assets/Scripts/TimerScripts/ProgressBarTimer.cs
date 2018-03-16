@@ -5,11 +5,15 @@ namespace TimerScripts
 {
 	public class ProgressBarTimer : Timer
 	{
-		[SerializeField] private Image timeBarImage;
+		[SerializeField] protected Image timeBarImage;
 		private int startTimeValue;
 
+		protected virtual void Start ()
+		{
+			InitTimeLeft();
+		}
 
-		void Start ()
+		private void InitTimeLeft()
 		{
 			startTimeValue = Random.Range(3, 10);
 			timeLeft = startTimeValue;
@@ -17,15 +21,12 @@ namespace TimerScripts
 
 		protected override void TimeIsOver()
 		{
-			//todo: инициировать цвета замену чекпоинта
-			this.GetComponent<CheckPoint>().ChangeColor();
 			ResetTimer();
-
 		}
 
 		private void ResetTimer()
 		{
-			timeLeft = startTimeValue;
+			InitTimeLeft();
 		}
 
 		protected override void SetTimeValue()

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour {
 	private void Startup()
 	{
 		Time.timeScale = 1;
+		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		
 		DataManager.Instance.LoadData();
 
@@ -38,6 +40,14 @@ public class GameManager : MonoBehaviour {
 		InitCheckPoints();
 
 		InitiateCreationOfSquares();
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			Exit();
+		}
 	}
 
 	private void InitiateCreationOfSquares()

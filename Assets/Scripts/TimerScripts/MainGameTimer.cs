@@ -26,7 +26,6 @@ namespace TimerScripts
 		private void FinalizeGame()
 		{
 			FindObjectOfType<GameManager>().FinalizeGame();
-			ScoreManager.Instance.FinalizeGame();
 			FindObjectOfType<UIController>().EndGameTimer();
 		}
 

@@ -65,7 +65,12 @@ public class ScoreManager : MonoBehaviour
 			DataManager.Instance.SetBestScore(CurrentScore);
 		}
 	}
-	
+
+	private void OnDestroy()
+	{
+		FinalizeGame();
+	}
+
 #if UNITY_EDITOR
 	private void Update()
 	{

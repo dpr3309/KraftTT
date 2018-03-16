@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-	private AppConfig config = new AppConfig();
+	[SerializeField]private AppConfig config = new AppConfig();
 	
 	private static DataManager instance;
 	public static DataManager Instance
@@ -39,7 +39,7 @@ public class DataManager : MonoBehaviour
 	{
 		UnusedCheckpointColors = new List<Color>();
 		UnusedSquareColors = new List<Color>();
-		config = BinarySerializationManager.RuntimeLoadFile();
+		config = BinarySerializationManager.LoadFileFromResources();
 
 		InitListsOfColors();
 	}

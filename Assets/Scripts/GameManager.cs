@@ -9,12 +9,13 @@ public class GameManager : MonoBehaviour {
 
 	
 	void Start () {
-
 		Startup();
 	}
 
 	private void Startup()
 	{
+		Time.timeScale = 1;
+		
 		DataManager.Instance.LoadData();
 
 		InitGameTimer();
@@ -24,7 +25,11 @@ public class GameManager : MonoBehaviour {
 		{
 			SquareFactory.Instance.CreateSquare(position);
 		}
+	}
 
+	public void FinalizeGame()
+	{
+		Time.timeScale = 0;
 	}
 
 	public void Restart()
@@ -41,6 +46,5 @@ public class GameManager : MonoBehaviour {
 	{
 		InitGameTimer = delegate {  };
 		InitCheckPoints = delegate {  };
-
 	}
 }

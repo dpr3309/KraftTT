@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour {
 	public static UnityAction InitGameTimer = delegate {  };
 	public static UnityAction InitCheckPoints = delegate {  };
 
-	
 	void Start () {
 		Startup();
 	}
@@ -21,6 +20,11 @@ public class GameManager : MonoBehaviour {
 		InitGameTimer();
 		InitCheckPoints();
 
+		InitiateCreationOfSquares();
+	}
+
+	private void InitiateCreationOfSquares()
+	{
 		for (Positions position = Positions.Top; position <= Positions.Bottom; position++)
 		{
 			SquareFactory.Instance.CreateSquare(position);

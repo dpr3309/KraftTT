@@ -47,9 +47,7 @@ namespace Kraft
         {
             return Mathf.Clamp(value, 0, 255);
         }
-            
     }
-
 }
 
 

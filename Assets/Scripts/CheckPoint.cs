@@ -17,7 +17,6 @@ public class CheckPoint : MonoBehaviour
 	{
 		spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
 		GameManager.InitCheckPoints += SetColor;
-		
 	}
 
 	private void SetColor()

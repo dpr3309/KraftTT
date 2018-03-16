@@ -1,5 +1,8 @@
-﻿namespace TimerScripts
+﻿using UnityEngine;
+
+namespace TimerScripts
 {
+	[RequireComponent((typeof(CheckPoint)))]
 	public class CheckPointTimer : ProgressBarTimer
 	{
 		private CheckPoint checkPoint;

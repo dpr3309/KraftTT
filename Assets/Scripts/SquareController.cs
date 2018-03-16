@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class SquareController : MonoBehaviour
@@ -8,57 +6,44 @@ public class SquareController : MonoBehaviour
 	private SpriteRenderer spriteRenderer;
 	private Vector3 startPosition;
 	private Color color;
+	private Transform transformComponent;
 	
-	private int reward = 1;
-	private static float downTime;
-	private const float delayBetweenClicks = 0.3f;
-
 	private void Awake()
 	{
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
-	}
-
-	private void SetColor()
-	{
-		color = DataManager.Instance.GetSquareColor();
-		spriteRenderer.color = color;
+		transformComponent = this.transform;
 	}
 
 	void Start ()
 	{
-		startPosition = this.transform.position;
+		startPosition = transformComponent.position;
 		SetColor();
 	}
 	
+	private static float clickTime;
+	private const float delayBetweenClicks = 0.3f;
 	private void OnMouseDown()
 	{
-		if (Time.time - downTime < delayBetweenClicks)
+		if (Time.time - clickTime < delayBetweenClicks)
 		{
 			if (!DataManager.Instance.ColorHasPairOnTheField(color))
 			{
 				FinalizeAndDestroy();
 			}
 		}
-		downTime = Time.time;
+		clickTime = Time.time;
 	}
-
 
 	private Vector3 mousePosition;
 	void OnMouseDrag()
 	{
 		mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		
-		this.transform.position = new Vector3(mousePosition.x, mousePosition.y);
+		transformComponent.position = new Vector3(mousePosition.x, mousePosition.y);
 	}
      
 	void OnMouseUp()
 	{
 		ResetPosition();
-	}
-
-	private void ResetPosition()
-	{
-		this.transform.position = startPosition;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -68,7 +53,19 @@ public class SquareController : MonoBehaviour
 			CheckComplianceCheckPoint(other);
 		}
 	}
+	
+	private void SetColor()
+	{
+		color = DataManager.Instance.GetSquareColor();
+		spriteRenderer.color = color;
+	}
+	
+	private void ResetPosition()
+	{
+		transformComponent.position = startPosition;
+	}
 
+	private const int reward = 1;
 	private void CheckComplianceCheckPoint(Collider2D other)
 	{
 		var checkPoint = other.gameObject.GetComponent<CheckPoint>();
@@ -76,7 +73,6 @@ public class SquareController : MonoBehaviour
 		if (this.color == checkPoint.CurrentColor)
 		{
 			ScoreManager.Instance.AddPoint(reward);
-			
 			FinalizeAndDestroy();
 		}
 	}

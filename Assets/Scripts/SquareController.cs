@@ -26,7 +26,7 @@ public class SquareController : MonoBehaviour
 	{
 		if (Time.time - clickTime < delayBetweenClicks)
 		{
-			if (!DataManager.Instance.ColorHasPairOnTheField(color))
+			if (!GameManager.Instance.ColorHasPairOnTheField(color))
 			{
 				FinalizeAndDestroy();
 			}

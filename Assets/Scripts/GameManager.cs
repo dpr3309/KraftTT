@@ -7,6 +7,23 @@ public class GameManager : MonoBehaviour {
 	public static UnityAction InitGameTimer = delegate {  };
 	public static UnityAction InitCheckPoints = delegate {  };
 
+	private static GameManager instance;
+
+	public static GameManager Instance
+	{
+		get { return instance; }
+	}
+
+	private void Awake()
+	{
+		if (Instance)
+		{
+			DestroyImmediate(this);
+			return;
+		}
+		instance = this;
+	}
+
 	void Start () {
 		Startup();
 	}
@@ -50,5 +67,11 @@ public class GameManager : MonoBehaviour {
 	{
 		InitGameTimer = delegate {  };
 		InitCheckPoints = delegate {  };
+	}
+
+	public bool ColorHasPairOnTheField(Color color)
+	{
+		var result = DataManager.Instance.ColorIsUsedForCheckPoints(color);
+		return result;
 	}
 }

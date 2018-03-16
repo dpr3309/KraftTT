@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
+			ScoreManager.Instance.FinalizeGame();
 			Exit();
 		}
 	}

@@ -1,27 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PositionController : MonoBehaviour
 {
-
 	[SerializeField] private Sides side;
 	[SerializeField] private Positions position;
 	[SerializeField] private Vector2 offset;
-	[SerializeField] private Bounds bound;
+	[SerializeField] private Bounds bounds;
 
-	
 	void Start ()
 	{
-		bound = GetComponent<SpriteRenderer>().bounds;
-		transform.position = PositioningManager.Instance.CalculatePositionInCurrentCameraSize(position, side, bound, offset);
-
+		bounds = GetComponent<SpriteRenderer>().bounds;
+		transform.position = PositioningManager.Instance.CalculatePositionInCurrentCameraSize(position, side, bounds, offset);
 	}
-
-	public void SetPosition(Sides _side, Positions _position)
-	{
-		transform.position = PositioningManager.Instance.CalculatePositionInCurrentCameraSize(_position, _side, bound, offset);
-	}
-	
-	
 }

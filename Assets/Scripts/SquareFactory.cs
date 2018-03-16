@@ -20,13 +20,12 @@ public class SquareFactory : MonoBehaviour
 	}
 
 	[SerializeField] private GameObject squarePrefab;
-
 	public void CreateSquare(Positions position)
 	{
-		Bounds bounds = squarePrefab.GetComponent<SpriteRenderer>().bounds;
-		Vector3 startPosition =
-			PositioningManager.Instance.CalculatePositionInCurrentCameraSize(position, Sides.Left, bounds,
-				new Vector2(0.1f, 0.1f));
+		var offset = new Vector2(0.1f, 0.1f);
+		var bounds = squarePrefab.GetComponent<SpriteRenderer>().bounds;
+		var startPosition =
+			PositioningManager.Instance.CalculatePositionInCurrentCameraSize(position, Sides.Left, bounds, offset);
 		Instantiate(squarePrefab, startPosition,Quaternion.identity);
 	}
 	

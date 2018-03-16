@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class DataManager : MonoBehaviour
 {
-
-	[SerializeField] private AppConfig config = new AppConfig();
+	[SerializeField]private AppConfig config = new AppConfig();
 	
-	private static DataManager instance = null;
-
+	private static DataManager instance;
 	public static DataManager Instance
 	{
 		get { return instance; }
@@ -22,7 +18,6 @@ public class DataManager : MonoBehaviour
 			DestroyImmediate(this);
 			return;
 		}
-
 		instance = this;
 		DontDestroyOnLoad(this);
 	}
@@ -38,13 +33,13 @@ public class DataManager : MonoBehaviour
 		return bestScore;
 	}
 
-	[SerializeField]private List<Color> UnusedCheckpointColors;
-	[SerializeField]private List<Color> UnusedSquareColors;
+	private List<Color> UnusedCheckpointColors;
+	private List<Color> UnusedSquareColors;
 	public void LoadData()
 	{
 		UnusedCheckpointColors = new List<Color>();
 		UnusedSquareColors = new List<Color>();
-		config = BinarySerializationManager.RuntimeLoadFile();
+		config = BinarySerializationManager.LoadFileFromResources();
 
 		InitListsOfColors();
 	}
@@ -62,7 +57,6 @@ public class DataManager : MonoBehaviour
 
 	public Color GetCheckpointColor()
 	{
-		//todo: из массива свободных цветов для чекпоинтов получить цвет
 		int index = Random.Range(0, UnusedCheckpointColors.Count);
 		var color = UnusedCheckpointColors[index];
 		UnusedCheckpointColors.Remove(color);
@@ -92,8 +86,7 @@ public class DataManager : MonoBehaviour
 		return config.Timer;
 	}
 
-
-	public bool ColorHasPairOnTheField(Color color)
+	public bool ColorIsUsedForCheckPoints(Color color)
 	{
 		return !UnusedCheckpointColors.Contains(color);
 	}

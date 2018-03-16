@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace TimerScripts
@@ -10,7 +9,6 @@ namespace TimerScripts
 
 		private void Awake()
 		{
-			Time.timeScale = 1;
 			GameManager.InitGameTimer += InitGameTimer;
 		}
 
@@ -21,11 +19,13 @@ namespace TimerScripts
 
 		protected override void TimeIsOver()
 		{
-			//todo: инициировать конец игры
-			Time.timeScale = 0;
+			FinalizeGame();
 			this.gameObject.SetActive(false);
-			
-			ScoreManager.Instance.FinalizeGame();
+		}
+
+		private void FinalizeGame()
+		{
+			FindObjectOfType<GameManager>().FinalizeGame();
 			FindObjectOfType<UIController>().EndGameTimer();
 		}
 
@@ -41,7 +41,7 @@ namespace TimerScripts
 		private string minutesCountString, secondsCountString; 
 		private string ConvertTimeLeftToTimeString()
 		{
-			minutes = (int)timeLeft / 60;
+			minutes = (int) timeLeft / 60;
 			seconds = (int) timeLeft % 60;
 
 			minutesCountString = (minutes < 10) ? string.Concat("0", minutes.ToString()) : minutes.ToString();

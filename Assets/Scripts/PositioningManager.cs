@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 public class PositioningManager : MonoBehaviour
 {
@@ -21,24 +18,21 @@ public class PositioningManager : MonoBehaviour
 			DestroyImmediate(this);
 			return;
 		}
-
 		instance = this;
-		camHalfHeight = Camera.main.orthographicSize;
-		camHalfWidth = Camera.main.aspect * camHalfHeight;
+		GetCameraSizes();
 	}
 
-	// Use this for initialization
-	void Start () {
-		
-
-		
+	private void GetCameraSizes()
+	{
+		camHalfHeight = Camera.main.orthographicSize;
+		camHalfWidth = Camera.main.aspect * camHalfHeight;
 	}
 
 	private Vector3 newPosition;
 	private Vector2 offsetVector;
 	public Vector3 CalculatePositionInCurrentCameraSize(Positions position, Sides side, Bounds bounds, Vector2 offset)
 	{
-		offsetVector = new Vector2(camHalfWidth*offset.x, camHalfHeight * offset.y);
+		offsetVector = new Vector2(camHalfWidth * offset.x, camHalfHeight * offset.y);
 		newPosition = new Vector3(0 + Camera.main.transform.position.x, 0 + Camera.main.transform.position.y);
 		switch (position)
 		{
@@ -46,37 +40,35 @@ public class PositioningManager : MonoBehaviour
 				switch (side)
 				{
 					case Sides.Left:
-						newPosition +=new Vector3(-camHalfWidth, camHalfHeight, 0);
-						newPosition +=new Vector3((bounds.size.x / 2)+offsetVector.x, -(bounds.size.y / 2)-offsetVector.y, 0);
+						newPosition += new Vector3(-camHalfWidth, camHalfHeight, 0);
+						newPosition += new Vector3((bounds.size.x / 2) + offsetVector.x, -(bounds.size.y / 2) - offsetVector.y, 0);
 						break;
 					case Sides.Centre:
-						newPosition += new Vector3(0,camHalfHeight,0);
-						newPosition +=new Vector3(0,-(bounds.size.y / 2)-offsetVector.y, 0);
+						newPosition += new Vector3(0, camHalfHeight, 0);
+						newPosition += new Vector3(0, -(bounds.size.y / 2) - offsetVector.y, 0);
 						break;
 					case Sides.Right:
-						newPosition +=new Vector3(camHalfWidth, camHalfHeight, 0);
-						newPosition +=new Vector3(-bounds.size.x / 2-offsetVector.x, -(bounds.size.y / 2)-offsetVector.y, 0);
+						newPosition += new Vector3(camHalfWidth, camHalfHeight, 0);
+						newPosition += new Vector3(-bounds.size.x / 2 - offsetVector.x, -(bounds.size.y / 2) - offsetVector.y, 0);
 						break;
 					default:
 						Debug.LogWarning("Тут еще одно позиционирование!!!");
 						break;
 				}
-				
 				break;
 			
 			case Positions.Middle:
 				switch (side)
 				{
 					case Sides.Left:
-						newPosition +=new Vector3(-camHalfWidth, 0, 0);
-						newPosition -=new Vector3(-(bounds.size.x / 2)-offsetVector.x, 0, 0);
+						newPosition += new Vector3(-camHalfWidth, 0, 0);
+						newPosition -= new Vector3(-(bounds.size.x / 2) - offsetVector.x, 0, 0);
 						break;
 					case Sides.Centre:
-						
 						break;
 					case Sides.Right:
-						newPosition +=new Vector3(camHalfWidth, 0, 0);
-						newPosition -=new Vector3((bounds.size.x / 2)+offsetVector.x, 0, 0);
+						newPosition += new Vector3(camHalfWidth, 0, 0);
+						newPosition -= new Vector3((bounds.size.x / 2) + offsetVector.x, 0, 0);
 						break;
 					default:
 						Debug.LogWarning("Тут еще одно позиционирование!!!");
@@ -88,27 +80,23 @@ public class PositioningManager : MonoBehaviour
 				switch (side)
 				{
 					case Sides.Left:
-						newPosition +=new Vector3(-camHalfWidth, -camHalfHeight, 0);
-						newPosition -=new Vector3(-(bounds.size.x / 2)-offsetVector.x, -(bounds.size.y / 2)-offsetVector.y, 0);
+						newPosition += new Vector3(-camHalfWidth, -camHalfHeight, 0);
+						newPosition -= new Vector3(-(bounds.size.x / 2) - offsetVector.x, -(bounds.size.y / 2) - offsetVector.y, 0);
 						break;
 					case Sides.Centre:
-						newPosition += new Vector3(0,-camHalfHeight,0);
-						newPosition -=new Vector3(0,-(bounds.size.y / 2)-offsetVector.y, 0);
+						newPosition += new Vector3(0, -camHalfHeight, 0);
+						newPosition -= new Vector3(0, -(bounds.size.y / 2) - offsetVector.y, 0);
 						break;
 					case Sides.Right:
-						newPosition +=new Vector3(camHalfWidth, -camHalfHeight, 0);
-						newPosition -=new Vector3((bounds.size.x / 2)+offsetVector.x, -(bounds.size.y / 2)-offsetVector.y, 0);
+						newPosition += new Vector3(camHalfWidth, -camHalfHeight, 0);
+						newPosition -= new Vector3((bounds.size.x / 2) + offsetVector.x, -(bounds.size.y / 2) - offsetVector.y, 0);
 						break;
 					default:
 						Debug.LogWarning("Тут еще одно позиционирование!!!");
 						break;
 				}
 				break;
-				
 		}
-
 		return newPosition;
 	}
-
-
 }

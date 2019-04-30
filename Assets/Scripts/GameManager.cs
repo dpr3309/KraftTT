@@ -3,7 +3,8 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour 
+{
 
 	public static UnityAction InitGameTimer = delegate {  };
 	public static UnityAction InitCheckPoints = delegate {  };
@@ -14,7 +15,11 @@ public class GameManager : MonoBehaviour {
 	{
 		get { return instance; }
 	}
-
+	
+	
+	//dfslghdslkg
+	//dlsfjghkdfjshg
+	//dsflkgjdklsfj
 	private void Awake()
 	{
 		if (Instance)
